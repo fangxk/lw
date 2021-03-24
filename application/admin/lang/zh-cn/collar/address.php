@@ -1,0 +1,24 @@
+<?php
+
+return [
+    'Id'            => 'ID',
+    'User_id'       => '用户ID',
+    'Name'          => '收货人',
+    'Mobile'        => '手机号',
+    'Default'       => '默认',
+    'Default 1'     => '是',
+    'Default 0'     => '否',
+    'Country'       => '国家',
+    'Province'      => '省份',
+    'City'          => '城市',
+    'District'      => '区/县',
+    'Address'       => '详细地址',
+    'Address_name'  => '地址名称',
+    'Createtime'    => '创建时间',
+    'Updatetime'    => '更新时间',
+    'Deletetime'    => '删除时间',
+    'Status'        => '状态',
+    'User.id'       => 'ID',
+    'User.username' => '用户名',
+    'User.nickname' => '昵称'
+];

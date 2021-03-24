@@ -1,0 +1,182 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+   <!-- <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Weigh')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-weigh" class="form-control" name="row[weigh]" type="number" value="0">
+        </div>
+    </div>-->
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Category_ids')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-category_ids" data-rule="required" data-source="collar/category/index" data-multiple="true" class="form-control selectpage" name="row[category_ids]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Name')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-name" data-rule="required" class="form-control" name="row[name]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Desc')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-desc" data-rule="required" class="form-control" name="row[desc]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Goods_status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="radio">
+            {foreach name="goodsStatusList" item="vo"}
+            <label for="row[goods_status]-{$key}"><input id="row[goods_status]-{$key}" name="row[goods_status]" type="radio" value="{$key}" {in name="key" value="1"}checked{/in} /> {$vo}</label> 
+            {/foreach}
+            </div>
+        </div>
+    </div>
+    <!--是否启用规格-->
+<div id="app">
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-2">{:__('Hasoption')}:</label>
+            <div class="col-xs-12 col-sm-8">
+                <div class="radio">
+                    {foreach name="hasoptionList" item="vo"}
+                    <label for="row[hasoption]-{$key}"><input id="row[hasoption]-{$key}" name="row[hasoption]" type="radio" value="{$key}" {in name="key" value=""}checked{/in}  v-model="hasoption"/> {$vo}</label>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+        <!--是否启用规格-->
+        <!--启用多规格-->
+        <div class="form-group wanl-specs">
+            <label class="control-label col-xs-12 col-sm-2">产品属性:</label>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="info text-info">
+
+                            <th width="80">颜色</th>
+                            <th width="80">尺寸</th>
+
+                            <th width="80">原价</th>
+                            <th width="80">现价</th>
+                            <th width="80">库存</th>
+                            <th width="80">重量(k)</th>
+                            <th width="80">编码</th>
+                            <th width="30">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+
+                            <td>红色</td>
+                            <td>1.2毛</td>
+                            <td width="80"> <input type="number" data-rule="required" name="row[market_price][]" class="input-sm form-control wanl-market_price"> </td>
+                            <td width="80"> <input type="number" data-rule="required" name="row[price][]" class="input-sm form-control wanl-price"> </td>
+                            <td width="80"><input type="number" data-rule="required" name="row[stocks][]" class="input-sm form-control wanl-stock"></td>
+                            <td width="80"><input type="number" name="row[weigh][]" class="input-sm form-control wanl-weigh"></td>
+                            <td width="80"><input type="text" name="row[sn][]" class="input-sm form-control wanl-sn"></td>
+                            <td width="30">
+                                <script id="valuetpl" type="text/html">
+                                    <dd class="form-inline">
+                                        <span class="btn btn-sm btn-danger btn-remove"><i class="fa fa-times"></i></span>
+                                        <span class="btn btn-sm btn-primary btn-dragsort"><i class="fa fa-arrows"></i></span>
+                                    </dd>
+                                </script>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--启用多规格-->
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Price')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-price" data-rule="required" class="form-control" step="0.01" name="row[price]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Costprice')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-costprice" class="form-control" step="0.01" name="row[costprice]" type="number" value="0.00">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Productprice')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-productprice" data-rule="required" class="form-control" step="0.01" name="row[productprice]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Sales')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-sales" data-rule="required" class="form-control" name="row[sales]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Seller_count')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-seller_count" class="form-control" name="row[seller_count]" type="number" value="0">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Showsales')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-showsales" data-rule="required" class="form-control" name="row[showsales]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Weight')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-weight" data-rule="required" class="form-control" name="row[weight]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Total')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-total" data-rule="required" class="form-control" name="row[total]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Day_salescount')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-day_salescount" class="form-control" name="row[day_salescount]" type="number" value="0">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Is_index_show')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="radio">
+                {foreach name="isIndexShowList" item="vo"}
+                <label for="row[isIndexShowList]-{$key}"><input id="row[isIndexShowList]-{$key}" name="row[isIndexShowList]" type="radio" value="{$key}" {in name="key" value=""}checked{/in} /> {$vo}</label>
+                {/foreach}
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Istop')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="radio">
+                {foreach name="istopList" item="vo"}
+                <label for="row[istopList]-{$key}"><input id="row[istopList]-{$key}" name="row[istopList]" type="radio" value="{$key}" {in name="key" value=""}checked{/in} /> {$vo}</label>
+                {/foreach}
+            </div>
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>
