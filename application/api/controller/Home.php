@@ -32,4 +32,11 @@ class Home extends Api
         $this->success("成功",$res);
     }
 
+    /**
+     * 开始三人同意接口
+     */
+    public function threepeople_agree(){
+
+    }
+
 }

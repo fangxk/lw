@@ -12,7 +12,8 @@ class Pay extends Api
 {
     protected $noNeedLogin = [];
 	protected $noNeedRight = ['*'];
-    
+
+
 	/**
 	 * 获取支付信息
 	 *
@@ -42,6 +43,7 @@ class Pay extends Api
 		}
 		$this->error(__('非法请求'));
 	}
+
 	
 	/**
 	 * 支付订单
