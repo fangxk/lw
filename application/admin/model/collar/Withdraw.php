@@ -28,7 +28,29 @@ class Withdraw extends Model
         'status_text',
         'transfertime_text'
     ];
-    
+
+    public function getTypeAttr($value)
+    {
+        return [
+            'alipay'=> '支付宝',
+            'ALIPAY'=> '支付宝账户',
+            'WECHAT'=> '微信账户',
+            'ICBC'  => '工商银行',
+            'ABC'   => '农业银行',
+            'PSBC'  => '邮储银行',
+            'CCB'   => '建设银行',
+            'CMB'   => '招商银行',
+            'BOC'   => '中国银行',
+            'COMM'  => '交通银行',
+            'SPDB'  => '浦发银行',
+            'GDB'   => '广发银行',
+            'CMBC'  => '民生银行',
+            'PAB'   => '平安银行',
+            'CEB'   => '光大银行',
+            'CIB'   => '兴业银行',
+            'CITIC' => '中信银行'
+        ][$value];
+    }
 
     
     public function getStatusList()

@@ -142,6 +142,7 @@ class Pay extends Api
 	{
 	    //设置过滤方法
 		$this->request->filter(['strip_tags']);
+
 	    if ($this->request->isPost()) {
 		    $post = $this->request->post();
 		    $post['user_id'] = $this->auth->id;
@@ -216,6 +217,7 @@ class Pay extends Api
             }
             // 查询提现账户
             $account = \app\api\model\wanlshop\PayAccount::where(['id' => $account_id, 'user_id' => $this->auth->id])->find();
+
             if (!$account) {
                 $this->error("提现账户不存在");
             }
@@ -240,6 +242,7 @@ class Pay extends Api
 				$servicefee = 0;
 				$handingmoney = $money;
 			}
+
             Db::startTrans();
             try {
                 $data = [
@@ -250,6 +253,7 @@ class Pay extends Api
                     'account' => $account['cardCode'],
 					'orderid' => date("Ymdhis") . sprintf("%08d", $this->auth->id) . mt_rand(1000, 9999)
                 ];
+                print_r($data);die;
                 $withdraw = \app\api\model\wanlshop\Withdraw::create($data);
 				$pay      = new WanlPay;
 				$pay->money(-$money, $this->auth->id, '申请提现', 'withdraw', $withdraw['id']);

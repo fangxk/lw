@@ -13,10 +13,40 @@ use think\Validate;
 
 class Member extends Api
 {
-    protected $noNeedLogin = [];
+    protected $noNeedLogin = ['member_mobile','member_empty'];
     protected $noNeedRight = '*';
 
-
+    /**
+     * 页面开始三人同意随机10人拒绝接口
+     */
+    public function threepeople_agree(){
+        $user_num   = $this->auth->experience_num;
+        $user_id    = $this->auth->id;
+        //3人是否同意入库
+        $three_user = Db("collar_three_agree")->field("id,username")->where("user_num={$user_num} AND user_id={$user_id}")->select();
+        if(empty($three_user)){//随机同意的
+            for($i=0;$i<3;$i++){
+                $three_user[$i]["username"] = Random::Randname();
+                $three_user[$i]["avatar"]   = cdnurl(config("site.ptavatar"),true);
+                $three_user_data = array("user_num"=>$user_num,"username"=>$three_user[$i]["username"],"user_id"=>$user_id,"createtime"=>time());
+                //记录到数据库
+                Db("collar_three_agree")->insert($three_user_data);
+            }
+        }else{//添加随机用户的头像
+            foreach ($three_user as &$v){
+                unset($v["id"]);
+                $v["avatar"] = cdnurl(config("site.ptavatar"),true);
+            }
+        }
+        //随机拒绝人人数；
+        $result_total = 10;
+        for($i=0;$i<$result_total;$i++){
+            $result_peoples[$i]["username"] = Random::Randname();
+            $result_peoples[$i]["avatar"]   = cdnurl(config("site.ptavatar"),true);
+        }
+        $data = array("agree_user"=>$three_user,"result_user"=>$result_peoples);
+        $this->success("数据请求成功",$data);
+    }
 
     /**
      * 登录

@@ -28,8 +28,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'id', title: __('Id'),visible: false},
-                        {field: 'weigh', title: __('Weigh'), operate: false},
+                        {field: 'id', title: __('Id')},
+                        {field: 'weigh', title: __('Weigh'),visible: false,operate: false},
                         {field: 'title', title: __('Title')},
                         {field: 'desc', title: __('Desc'),visible: false},
                         {field: 'createtime', title: __('Createtime'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
