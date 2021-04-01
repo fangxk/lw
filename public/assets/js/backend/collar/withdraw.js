@@ -10,7 +10,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 extend: {
                     index_url: 'collar/withdraw/index' + location.search,
                     add_url: 'collar/withdraw/add',
-                    edit_url: 'collar/withdraw/edit',
+                    /*edit_url: 'collar/withdraw/edit',*/
                     del_url: 'collar/withdraw/del',
                     multi_url: 'collar/withdraw/multi',
                     import_url: 'collar/withdraw/import',
@@ -44,14 +44,58 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'createtime', title: __('Createtime'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
                         /*{field: 'updatetime', title: __('Updatetime'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},*/
                         /*{field: 'user.id', title: __('User.id')},*/
-
                         /*{field: 'user.username', title: __('User.username'), operate: 'LIKE'},
                         {field: 'user.nickname', title: __('User.nickname'), operate: 'LIKE'},*/
-                        {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
+
+                        {field: 'operate', title: __('Operate'),
+                            buttons: [
+                                {
+                                    name: "agree",
+                                    title: __("同意提现申请"),
+                                    classname: "btn btn-xs btn-success btn-magic btn-ajax",
+                                    icon: "fa fa-check",
+                                    text: "同意",
+                                    confirm: "确认点击同意，通过提现申请？",
+                                    url: "collar/withdraw/agree",
+                                    visible: function(e) {
+                                        if ("created" == e.status) return ! 0
+                                    },
+                                    success: function(e, a) {
+                                        return t.bootstrapTable("refresh"),
+                                            !1
+                                    },
+                                    error: function(e, t) {
+                                        return console.log(e, t),
+                                            Layer.alert(t.msg),
+                                            !1
+                                    }
+                                },
+                                {
+                                    name: "refuse",
+                                    title: __("拒绝提现申请"),
+                                    classname: "btn btn-xs btn-danger btn-dialog",
+                                    icon: "fa fa-times",
+                                    text: "拒绝",
+                                    url: "collar/withdraw/refuse",
+                                    visible: function(e) {
+                                        if ("created" == e.status) return ! 0
+                                    },
+                                    extend: 'data-area=["500px","270px"]'
+                                },
+                                {
+                                    name: "detail",
+                                    title: __("详情"),
+                                    classname: "btn btn-xs btn-info btn-dialog",
+                                    icon: "fa fa-eye",
+                                    url: "collar/withdraw/detail"
+                                }
+                            ],
+                            table: table, events: Table.api.events.operate,
+                            formatter: Table.api.formatter.operate
+                        }
                     ]
                 ]
             });
-
             // 为表格绑定事件
             Table.api.bindevent(table);
         },
@@ -60,6 +104,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
         },
         edit: function () {
             Controller.api.bindevent();
+        },
+        refuse: function() {
+            Controller.api.bindevent()
         },
         api: {
             bindevent: function () {

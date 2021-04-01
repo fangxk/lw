@@ -24,6 +24,7 @@ class WithdrawLog
     public static function money($money, $user_id, $memo, $type = '', $ids = '')
     {
         $user = model('app\common\model\User')->get($user_id);
+        //print_r($user->money);die;
         if ($user && $money != 0) {
             $before = $user->money;
             $after = function_exists('bcadd') ? bcadd($user->money, $money, 2) : $user->money + $money;
